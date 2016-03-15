@@ -12,4 +12,8 @@ RSpec.describe User, type: :model do
     should validate_uniqueness_of :user_name
   end
 
+  it 'has secure password provided by ActiveModel' do
+    should have_secure_password
+  end
+
 end
