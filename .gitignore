@@ -79,3 +79,6 @@ capybara-*html
 
 # byebug
 .byebug_history
+
+# Simplecov
+coverage
