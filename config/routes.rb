@@ -1,6 +1,15 @@
 Rails.application.routes.draw do
   root to: 'welcome#index'
 
+  resources :users, only: [:index, :show] do
+    collection do
+      resource :registrations, only: [:new, :create]
+    end
+  end
+
+  get  'sign_up', to: 'registrations#new',    as: :sign_up
+  post 'sign_up', to: 'registrations#create', as: :do_user_sign_up
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
