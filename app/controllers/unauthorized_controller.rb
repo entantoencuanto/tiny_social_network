@@ -15,6 +15,6 @@ class UnauthorizedController < ActionController::Metal
     unless request.get?
       flash.alert = 'Unauthorized'
     end
-    redirect_to root_url
+    redirect_to sign_in_url
   end
 end

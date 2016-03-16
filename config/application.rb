@@ -38,6 +38,7 @@ module TinySocialNetwork
       end
 
       manager.failure_app = UnauthorizedController
+      manager.default_strategies :password
     end
   end
 end
