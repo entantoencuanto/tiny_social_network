@@ -36,6 +36,8 @@ module TinySocialNetwork
       manager.serialize_from_session do |id|
         User.find_by_id(id)
       end
+
+      manager.failure_app = UnauthorizedController
     end
   end
 end
