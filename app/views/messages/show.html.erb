@@ -10,4 +10,5 @@
   <%= @message.user %>
 </p>
 
+<%= link_to 'Destroy', @message, method: :delete, data: { confirm: 'Are you sure?' } if @message.can_be_deleted_by?(current_user)%>
 <%= link_to 'Back', messages_path %>
