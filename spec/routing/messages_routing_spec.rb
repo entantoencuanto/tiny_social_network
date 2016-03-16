@@ -15,20 +15,8 @@ RSpec.describe MessagesController, type: :routing do
       expect(:get => "/messages/1").to route_to("messages#show", :id => "1")
     end
 
-    it "routes to #edit" do
-      expect(:get => "/messages/1/edit").to route_to("messages#edit", :id => "1")
-    end
-
     it "routes to #create" do
       expect(:post => "/messages").to route_to("messages#create")
-    end
-
-    it "routes to #update via PUT" do
-      expect(:put => "/messages/1").to route_to("messages#update", :id => "1")
-    end
-
-    it "routes to #update via PATCH" do
-      expect(:patch => "/messages/1").to route_to("messages#update", :id => "1")
     end
 
     it "routes to #destroy" do

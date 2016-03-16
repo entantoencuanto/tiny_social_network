@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :messages
+  resources :messages, except: [:edit, :update]
   root to: 'welcome#index'
 
   resources :users, only: [:index, :show] do
