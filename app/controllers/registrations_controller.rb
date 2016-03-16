@@ -1,5 +1,7 @@
 class RegistrationsController < ApplicationController
 
+  skip_before_action :authenticate!
+
   # GET /users/registrations/new
   # GET /sign_up
   def new
