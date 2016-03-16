@@ -26,5 +26,16 @@ module TinySocialNetwork
     config.generators do |g|
       g.test_framework :rspec, :view_specs => false
     end
+
+    # Warden sessions:
+    config.middleware.insert_after ActionDispatch::Flash, Warden::Manager do |manager|
+      manager.serialize_into_session do |user|
+        user.id
+      end
+
+      manager.serialize_from_session do |id|
+        User.find_by_id(id)
+      end
+    end
   end
 end
