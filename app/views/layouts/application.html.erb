@@ -7,6 +7,9 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <% if signed_in? %>
+    Signed in as <%= current_user.user_name %> &middot; <%= link_to('Sign out', sessions_path, :method => :delete) %> <br/>
+  <% end %>
 
   <% flash.each do |name, msg| -%>
     <%= content_tag :div, msg, class: name %>
