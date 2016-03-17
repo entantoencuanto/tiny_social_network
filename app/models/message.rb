@@ -6,6 +6,7 @@ class Message < ActiveRecord::Base
   belongs_to :user
 
   scope :by_user, ->(user) { where(user_id: user.id) }
+  scope :recent,  -> { order(created_at: :desc) }
 
   def can_be_deleted_by?(user)
     user == self.user

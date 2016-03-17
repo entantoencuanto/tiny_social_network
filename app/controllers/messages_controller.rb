@@ -6,7 +6,7 @@ class MessagesController < ApplicationController
   # GET /messages
   # GET /messages.json
   def index
-    @messages = @user.present? ? Message.by_user(@user) : Message.all
+    @messages = @user.present? ? Message.recent.by_user(@user) : Message.recent.all
   end
 
   # GET /messages/1
