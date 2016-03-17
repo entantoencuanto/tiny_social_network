@@ -35,6 +35,10 @@ gem 'bcrypt', '~> 3.1.7'
 # Use Warden for users authentication
 gem 'warden', '~> 1.2.6'
 
+# API
+gem 'rails-api', '~> 0.4.0'
+gem 'active_model_serializers', '0.10.0.rc3'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
