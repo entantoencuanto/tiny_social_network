@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  skip_before_action :authenticate!, only: [:index, :show]
   before_action :set_user, only: [:show, :follow, :unfollow]
   before_action :set_collection_proxy, only: [:index]
 
@@ -9,7 +10,7 @@ class UsersController < ApplicationController
 
   # GET /users/1
   def show
-    @is_followed = current_user.followeds.include?(@user)
+    @is_followed = (signed_in? and current_user.followeds.include?(@user))
   end
 
   # PUT users/1/follow

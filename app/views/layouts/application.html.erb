@@ -13,8 +13,13 @@
     <br />
     <br />
     <%= render partial: 'layouts/parts/menu' %>
-    <%= render partial: 'layouts/parts/flash_messages' %>
+  <% else %>
+    <%= link_to('Sign up', sign_up_path) %> &middot; <%= link_to('Sign in', sign_in_path) %> <br/>
+    <br />
+    <br />
+    <%= render partial: 'layouts/parts/signed_out_menu' %>
   <% end %>
+    <%= render partial: 'layouts/parts/flash_messages' %>
   <%= yield %>
 
 </body>

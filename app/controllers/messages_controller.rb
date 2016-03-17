@@ -1,4 +1,5 @@
 class MessagesController < ApplicationController
+  skip_before_action :authenticate!, only: [:index, :show]
   before_action :set_message, only: [:show, :destroy]
   before_action :check_delete_authorization, only: [:destroy]
   before_action :user_filter, only: [:index]
@@ -6,7 +7,11 @@ class MessagesController < ApplicationController
   # GET /messages
   # GET /messages.json
   def index
-    @messages = @user.present? ? Message.recent.by_user(@user) : current_user.followed_messages.recent
+    @messages = if @user.present?
+                  Message.recent.by_user(@user)
+                else
+                  signed_in? ? current_user.followed_messages.recent : Message.recent
+                end
   end
 
   # GET /messages/1

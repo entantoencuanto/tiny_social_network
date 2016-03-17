@@ -1,0 +1,9 @@
+<% if signed_in? %>
+  <div class="follows">
+    <% if is_followed %>
+      <%= link_to 'Unfollow', unfollow_user_path(user), method: :put %>
+    <% else %>
+      <%= link_to 'Follow', follow_user_path(user), method: :put %>
+    <% end %>
+  </div>
+<% end %>

@@ -3,13 +3,7 @@
   <%= @user %>
 </p>
 
-<div class="follows">
-<% if @is_followed %>
-  <%= link_to 'Unfollow', unfollow_user_path(@user), method: :put %>
-<% else %>
-  <%= link_to 'Follow', follow_user_path(@user), method: :put %>
-<% end %>
-</div>
+<%= render partial: 'users/show/follow_actions', locals: { user: @user, is_followed: @is_followed } %>
 
 <%= render partial: 'shared/follows_links', locals: {user: @user}%>
 <%= link_to 'Messages', user_messages_path(@user) %>
