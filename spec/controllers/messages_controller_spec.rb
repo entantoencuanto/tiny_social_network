@@ -24,37 +24,37 @@ RSpec.describe MessagesController, type: :controller do
   # Message. As you add validations to Message, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    {content: 'Text'}
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {content: ('Text too long reaching the limit of 160 characters. ' * 10)}
   }
 
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # MessagesController. Be sure to keep this updated too.
-  let(:valid_session) { {} }
+  before do
+    @user = FactoryGirl.create(:user)
+    login_with(@user)
+  end
 
   describe "GET #index" do
     it "assigns all messages as @messages" do
-      message = Message.create! valid_attributes
-      get :index, {}, valid_session
+      message = FactoryGirl.create(:message)
+      get :index, {}
       expect(assigns(:messages)).to eq([message])
     end
   end
 
   describe "GET #show" do
     it "assigns the requested message as @message" do
-      message = Message.create! valid_attributes
-      get :show, {:id => message.to_param}, valid_session
+      message = FactoryGirl.create(:message)
+      get :show, {:id => message.to_param}
       expect(assigns(:message)).to eq(message)
     end
   end
 
   describe "GET #new" do
     it "assigns a new message as @message" do
-      get :new, {}, valid_session
+      get :new, {}
       expect(assigns(:message)).to be_a_new(Message)
     end
   end
@@ -63,30 +63,30 @@ RSpec.describe MessagesController, type: :controller do
     context "with valid params" do
       it "creates a new Message" do
         expect {
-          post :create, {:message => valid_attributes}, valid_session
+          post :create, {:message => valid_attributes}
         }.to change(Message, :count).by(1)
       end
 
       it "assigns a newly created message as @message" do
-        post :create, {:message => valid_attributes}, valid_session
+        post :create, {:message => valid_attributes}
         expect(assigns(:message)).to be_a(Message)
         expect(assigns(:message)).to be_persisted
       end
 
       it "redirects to the created message" do
-        post :create, {:message => valid_attributes}, valid_session
+        post :create, {:message => valid_attributes}
         expect(response).to redirect_to(Message.last)
       end
     end
 
     context "with invalid params" do
       it "assigns a newly created but unsaved message as @message" do
-        post :create, {:message => invalid_attributes}, valid_session
+        post :create, {:message => invalid_attributes}
         expect(assigns(:message)).to be_a_new(Message)
       end
 
       it "re-renders the 'new' template" do
-        post :create, {:message => invalid_attributes}, valid_session
+        post :create, {:message => invalid_attributes}
         expect(response).to render_template("new")
       end
     end
@@ -94,15 +94,15 @@ RSpec.describe MessagesController, type: :controller do
 
   describe "DELETE #destroy" do
     it "destroys the requested message" do
-      message = Message.create! valid_attributes
+      message = FactoryGirl.create(:message, user: @user)
       expect {
-        delete :destroy, {:id => message.to_param}, valid_session
+        delete :destroy, {:id => message.to_param}
       }.to change(Message, :count).by(-1)
     end
 
     it "redirects to the messages list" do
-      message = Message.create! valid_attributes
-      delete :destroy, {:id => message.to_param}, valid_session
+      message = FactoryGirl.create(:message, user: @user)
+      delete :destroy, {:id => message.to_param}
       expect(response).to redirect_to(messages_url)
     end
   end
