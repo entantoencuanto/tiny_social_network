@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :messages, except: [:edit, :update]
-  root to: 'welcome#index'
+  root to: 'messages#index'
 
   resources :users, only: [:index, :show] do
     collection do
