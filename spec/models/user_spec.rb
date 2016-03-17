@@ -21,4 +21,26 @@ RSpec.describe User, type: :model do
     should have_secure_password
   end
 
+  context 'followers' do
+
+    it '#follow' do
+      follower = FactoryGirl.create(:user, user_name: 'follower')
+      followed = FactoryGirl.create(:user, user_name: 'followed')
+      follower.follow(followed)
+
+      expect(follower.followeds).to include(followed)
+      expect(followed.followers).to include(follower)
+    end
+
+    it '#unfollow' do
+      follow = FactoryGirl.create(:follow)
+      follower = follow.follower
+      followed = follow.followed
+      follower.unfollow(followed)
+
+      expect(follower.followeds).to_not include(followed)
+      expect(followed.followers).to_not include(follower)
+    end
+  end
+
 end
