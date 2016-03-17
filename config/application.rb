@@ -30,6 +30,12 @@ module TinySocialNetwork
     # Custom Errors
     require 'custom_errors'
 
+    # Missing middlewares disabled by rails-api gem
+    config.middleware.insert_after Rack::Runtime, Rack::MethodOverride
+    config.middleware.insert_after ActiveRecord::QueryCache, ActionDispatch::Cookies
+    config.middleware.insert_after ActionDispatch::Cookies, ActionDispatch::Flash
+    config.middleware.insert_after ActionDispatch::Cookies, ActionDispatch::Session::CookieStore
+
     # Warden sessions:
     config.middleware.insert_after ActionDispatch::Flash, Warden::Manager do |manager|
       manager.serialize_into_session do |user|
