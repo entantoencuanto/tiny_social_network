@@ -3,5 +3,12 @@
   <%= @user %>
 </p>
 
+<div class="follows">
+<% if @is_followed %>
+  <%= link_to 'Unfollow', unfollow_user_path(@user), method: :put %>
+<% else %>
+  <%= link_to 'Follow', follow_user_path(@user), method: :put %>
+<% end %>
+</div>
 <%= link_to 'Messages', user_messages_path(@user) %>
 <%= link_to 'Back', users_path %>
