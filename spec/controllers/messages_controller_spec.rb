@@ -33,14 +33,28 @@ RSpec.describe MessagesController, type: :controller do
 
   before do
     @user = FactoryGirl.create(:user)
-    login_with(@user)
   end
 
   describe "GET #index" do
-    it "assigns all messages as @messages" do
-      message = FactoryGirl.create(:message)
-      get :index, {}
-      expect(assigns(:messages)).to eq([message])
+    context "not signed in users" do
+      it "assigns all messages as @messages" do
+        logged_out
+        message = FactoryGirl.create(:message)
+        get :index, {}
+        expect(assigns(:messages)).to eq([message])
+      end
+    end
+
+    context "signed in user" do
+      it "assigns messages by followed users of current_user as @messages" do
+        login_with(@user)
+        followed = FactoryGirl.create(:user)
+        @user.follow(followed)
+        message = FactoryGirl.create(:message)
+        message_by_followed = FactoryGirl.create(:message, user: followed)
+        get :index, {}
+        expect(assigns(:messages)).to eq([message_by_followed])
+      end
     end
   end
 
@@ -54,6 +68,7 @@ RSpec.describe MessagesController, type: :controller do
 
   describe "GET #new" do
     it "assigns a new message as @message" do
+      login_with(@user)
       get :new, {}
       expect(assigns(:message)).to be_a_new(Message)
     end
@@ -62,18 +77,21 @@ RSpec.describe MessagesController, type: :controller do
   describe "POST #create" do
     context "with valid params" do
       it "creates a new Message" do
+        login_with(@user)
         expect {
           post :create, {:message => valid_attributes}
         }.to change(Message, :count).by(1)
       end
 
       it "assigns a newly created message as @message" do
+        login_with(@user)
         post :create, {:message => valid_attributes}
         expect(assigns(:message)).to be_a(Message)
         expect(assigns(:message)).to be_persisted
       end
 
       it "redirects to the created message" do
+        login_with(@user)
         post :create, {:message => valid_attributes}
         expect(response).to redirect_to(Message.last)
       end
@@ -81,11 +99,13 @@ RSpec.describe MessagesController, type: :controller do
 
     context "with invalid params" do
       it "assigns a newly created but unsaved message as @message" do
+        login_with(@user)
         post :create, {:message => invalid_attributes}
         expect(assigns(:message)).to be_a_new(Message)
       end
 
       it "re-renders the 'new' template" do
+        login_with(@user)
         post :create, {:message => invalid_attributes}
         expect(response).to render_template("new")
       end
@@ -94,6 +114,7 @@ RSpec.describe MessagesController, type: :controller do
 
   describe "DELETE #destroy" do
     it "destroys the requested message" do
+      login_with(@user)
       message = FactoryGirl.create(:message, user: @user)
       expect {
         delete :destroy, {:id => message.to_param}
@@ -101,6 +122,7 @@ RSpec.describe MessagesController, type: :controller do
     end
 
     it "redirects to the messages list" do
+      login_with(@user)
       message = FactoryGirl.create(:message, user: @user)
       delete :destroy, {:id => message.to_param}
       expect(response).to redirect_to(messages_url)

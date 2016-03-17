@@ -15,4 +15,11 @@ module ControllerHelpers
       allow(controller).to receive(current_user).and_return(user)
     end
   end
+
+  def logged_out
+    manager = Warden::Manager.new(nil, &Rails.application.config.middleware.detect{|m| m.name == 'Warden::Manager'}.block)
+    request.env['warden'] = Warden::Proxy.new(request.env, manager)
+    current_user = nil
+    allow(request.env['warden']).to receive(:authenticate!).and_return(nil)
+  end
 end
