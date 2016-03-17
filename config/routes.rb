@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       resource :registrations, only: [:new, :create]
       resource :sessions,      only: [:new, :create, :destroy]
     end
+    resources :messages, only: [:index]
   end
 
   get  'sign_up', to: 'registrations#new',    as: :sign_up

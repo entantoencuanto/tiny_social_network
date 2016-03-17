@@ -1,11 +1,12 @@
 class MessagesController < ApplicationController
   before_action :set_message, only: [:show, :destroy]
   before_action :check_delete_authorization, only: [:destroy]
+  before_action :user_filter, only: [:index]
 
   # GET /messages
   # GET /messages.json
   def index
-    @messages = Message.all
+    @messages = @user.present? ? Message.by_user(@user) : Message.all
   end
 
   # GET /messages/1
@@ -53,6 +54,10 @@ class MessagesController < ApplicationController
 
     def check_delete_authorization
       redirect_to(@message, flash: { error: 'Unauthorized' }) unless @message.can_be_deleted_by?(current_user)
+    end
+
+    def user_filter
+      @user = params.has_key?(:user_id) ? User.find_by_id(params[:user_id]) : nil
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

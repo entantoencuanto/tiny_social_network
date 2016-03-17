@@ -5,6 +5,8 @@ class Message < ActiveRecord::Base
 
   belongs_to :user
 
+  scope :by_user, ->(user) { where(user_id: user.id) }
+
   def can_be_deleted_by?(user)
     user == self.user
   end
