@@ -11,8 +11,6 @@
 <% end %>
 </div>
 
-
-<%= link_to 'Followed users', user_followeds_path(@user) %>
-<%= link_to 'Followers', user_followers_path(@user) %>
+<%= render partial: 'shared/follows_links', locals: {user: @user}%>
 <%= link_to 'Messages', user_messages_path(@user) %>
 <%= link_to 'Back', users_path %>

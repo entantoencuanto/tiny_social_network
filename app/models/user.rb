@@ -25,4 +25,12 @@ class User < ActiveRecord::Base
     self.followeds.destroy(user)
   end
 
+  def total_followeds
+    followeds.count
+  end
+
+  def total_followers
+    followers.count
+  end
+
 end
