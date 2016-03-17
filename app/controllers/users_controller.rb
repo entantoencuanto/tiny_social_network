@@ -1,9 +1,10 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :follow, :unfollow]
+  before_action :set_collection_proxy, only: [:index]
 
   # GET /users
   def index
-    @users = User.all
+    @users = @collection_proxy.all
   end
 
   # GET /users/1
@@ -26,5 +27,18 @@ class UsersController < ApplicationController
   private
     def set_user
       @user = User.find(params[:id])
+    end
+
+    def set_collection_proxy
+      if params[:user_id].present?
+        @parent_user = User.find(params[:user_id])
+        @collection_proxy = @parent_user.send(collection_param)
+      else
+        @collection_proxy = User
+      end
+    end
+
+    def collection_param
+      params.require(:collection).to_sym
     end
 end

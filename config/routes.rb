@@ -12,6 +12,8 @@ Rails.application.routes.draw do
       put :unfollow
     end
     resources :messages, only: [:index]
+    resources :followeds, controller: :users, collection: 'followeds', only: [:index]
+    resources :followers, controller: :users, collection: 'followers', only: [:index]
   end
 
   get  'sign_up', to: 'registrations#new',    as: :sign_up

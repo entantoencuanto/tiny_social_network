@@ -1,4 +1,8 @@
-<h1>Listing Users</h1>
+<% if @parent_user.present? %>
+  <%= content_tag :h1, "User #{@parent_user}: #{params[:collection]}" %>
+<% else %>
+  <h1>Listing Users</h1>
+<% end %>
 
 <table>
   <thead>
@@ -17,3 +21,5 @@
     <% end %>
   </tbody>
 </table>
+
+<%= link_to_if @parent_user.present?, 'Back', @parent_user %>
