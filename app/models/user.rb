@@ -11,6 +11,8 @@ class User < ActiveRecord::Base
   has_many :followers, through: :follower_follows, source: :follower
   has_many :followeds, through: :followed_follows, source: :followed
 
+  has_many :followed_messages, through: :followeds, source: :messages
+
   def to_s
     user_name
   end
