@@ -33,15 +33,13 @@ class UsersController < ApplicationController
     def set_collection_proxy
       if params[:user_id].present?
         @parent_user = User.find(params[:user_id])
-        @collection_proxy = @parent_user.send(collection_param)
+        @collection_proxy = @parent_user.get_collection(collection_param)
       else
         @collection_proxy = User
       end
     end
 
     def collection_param
-      collection = params.require(:collection).to_sym
-      raise CustomErrors::InvalidParamError, "The collection param \"#{collection}\" is not valid" unless User.reflect_on_association(collection).present?
-      collection
+        params.require(:collection)
     end
 end

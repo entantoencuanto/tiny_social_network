@@ -13,6 +13,11 @@ class User < ActiveRecord::Base
 
   has_many :followed_messages, through: :followeds, source: :messages
 
+  def get_collection(association_name)
+    raise CustomErrors::InvalidParamError, "The collection param \"#{association_name}\" is not valid" unless User.reflect_on_association(association_name.to_sym).present?
+    self.send(association_name)
+  end
+
   def to_s
     user_name
   end
