@@ -40,6 +40,10 @@ About routes and controllers, I've decided to nest messages, followers and
 followed users under user_controller. Nesting one level only makes cleaner
 routes and allows the reuse of code in index.
 
+The authentication system has been implemented using Warden, which offers the
+exact functionality required to manage users sessions, and not the huge amount
+of functionality offered by other gems like Devise.
+
 ## Installation
 
 master branch contains the version working with Rails 4.2, but you can try
@@ -54,6 +58,9 @@ a rails5 branch
   * Initialize database with some example data: `rake db:seed`
 4. start server `rails s`
 5. Visit the local page at http://localhost:3000
+
+*A working deployed version of the application can be visited
+at: http://radiant-island-17254.herokuapp.com/*
 
 ## API endpoints
 
