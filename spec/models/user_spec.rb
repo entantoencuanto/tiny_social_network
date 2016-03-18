@@ -23,23 +23,45 @@ RSpec.describe User, type: :model do
 
   context 'followers' do
 
-    it '#follow' do
-      follower = FactoryGirl.create(:user, user_name: 'follower')
-      followed = FactoryGirl.create(:user, user_name: 'followed')
-      follower.follow(followed)
+    describe '#follow' do
+      it 'adds a user as followed' do
+        follower = FactoryGirl.create(:user, user_name: 'follower')
+        followed = FactoryGirl.create(:user, user_name: 'followed')
+        follower.follow(followed)
 
-      expect(follower.followeds).to include(followed)
-      expect(followed.followers).to include(follower)
+        expect(follower.followeds).to include(followed)
+        expect(followed.followers).to include(follower)
+      end
     end
 
-    it '#unfollow' do
-      follow = FactoryGirl.create(:follow)
-      follower = follow.follower
-      followed = follow.followed
-      follower.unfollow(followed)
+    describe '#unfollow' do
+      it 'removes a user from followeds collection' do
+        follow = FactoryGirl.create(:follow)
+        follower = follow.follower
+        followed = follow.followed
+        follower.unfollow(followed)
 
-      expect(follower.followeds).to_not include(followed)
-      expect(followed.followers).to_not include(follower)
+        expect(follower.followeds).to_not include(followed)
+        expect(followed.followers).to_not include(follower)
+      end
+    end
+  end
+
+  describe '#get_collection' do
+    it 'returns a collection from an association name' do
+        follower = FactoryGirl.create(:user, user_name: 'follower')
+        followed = FactoryGirl.create(:user, user_name: 'followed')
+        follower.follow(followed)
+
+        expect(follower.get_collection('followeds')).to eq(follower.followeds)
+    end
+
+    it 'raises an error if association name doesn\'t exist' do
+        follower = FactoryGirl.create(:user, user_name: 'follower')
+        followed = FactoryGirl.create(:user, user_name: 'followed')
+        follower.follow(followed)
+
+        expect {follower.get_collection('random')}.to raise_error(CustomErrors::InvalidParamError)
     end
   end
 
