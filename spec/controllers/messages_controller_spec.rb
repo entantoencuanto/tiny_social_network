@@ -56,6 +56,17 @@ RSpec.describe MessagesController, type: :controller do
         expect(assigns(:messages)).to eq([message_by_followed])
       end
     end
+
+    context "messages of a user" do
+
+      it "assigns all messages of a user as @messages" do
+        login_with(@user)
+        creator = FactoryGirl.create(:user)
+        message = FactoryGirl.create(:message, user: creator)
+        get :index, {user_id: creator.id}
+        expect(assigns(:messages)).to eq([message])
+      end
+    end
   end
 
   describe "GET #show" do

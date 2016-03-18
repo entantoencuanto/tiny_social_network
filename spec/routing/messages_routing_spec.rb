@@ -7,6 +7,10 @@ RSpec.describe MessagesController, type: :routing do
       expect(:get => "/messages").to route_to("messages#index")
     end
 
+    it "routes to user nested #messages" do
+      expect(:get => "/users/1/messages").to route_to("messages#index", user_id: '1')
+    end
+
     it "routes to #new" do
       expect(:get => "/messages/new").to route_to("messages#new")
     end
