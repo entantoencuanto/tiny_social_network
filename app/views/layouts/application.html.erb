@@ -19,7 +19,8 @@
     <br />
     <%= render partial: 'layouts/parts/signed_out_menu' %>
   <% end %>
-    <%= render partial: 'layouts/parts/flash_messages' %>
+  <%= render partial: 'layouts/parts/flash_messages' %>
+    <%= link_to('API', api_users_path) %>
   <%= yield %>
 
 </body>
