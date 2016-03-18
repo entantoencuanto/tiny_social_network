@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-
+ruby '2.3.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.6'
@@ -38,6 +38,9 @@ gem 'warden', '~> 1.2.6'
 # API
 gem 'rails-api', '~> 0.4.0'
 gem 'active_model_serializers', '0.10.0.rc3'
+
+# Heroku
+gem 'rails_12factor', group: :production
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
