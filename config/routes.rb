@@ -16,6 +16,17 @@ Rails.application.routes.draw do
     resources :followers, controller: :users, collection: 'followers', only: [:index]
   end
 
+  namespace 'api' do
+    scope module: 'v1' do
+      resources :users, only: [:index, :show] do
+        resources :followeds, controller: :users, collection: 'followeds', only: [:index]
+        resources :followers, controller: :users, collection: 'followers', only: [:index]
+        resources :messages, only: [:index]
+      end
+      resources :messages, only: [:show]
+    end
+  end
+
   get  'sign_up', to: 'registrations#new',    as: :sign_up
   post 'sign_up', to: 'registrations#create', as: :do_user_sign_up
   get  'sign_in', to: 'sessions#new',         as: :sign_in
