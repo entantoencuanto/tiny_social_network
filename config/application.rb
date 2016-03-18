@@ -27,6 +27,9 @@ module TinySocialNetwork
       g.test_framework :rspec, :view_specs => false
     end
 
+    # Custom Errors
+    require 'custom_errors'
+
     # Warden sessions:
     config.middleware.insert_after ActionDispatch::Flash, Warden::Manager do |manager|
       manager.serialize_into_session do |user|

@@ -39,6 +39,8 @@ class UsersController < ApplicationController
     end
 
     def collection_param
-      params.require(:collection).to_sym
+      collection = params.require(:collection).to_sym
+      raise CustomErrors::InvalidParamError, "The collection param \"#{collection}\" is not valid" unless User.reflect_on_association(collection).present?
+      collection
     end
 end
