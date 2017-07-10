@@ -1,5 +1,5 @@
 # Tiny Social Network
-[![Code Climate](https://codeclimate.com/repos/56ec2be07b109a3f3a00994c/badges/4739520f37257bb5cd93/gpa.svg)](https://codeclimate.com/repos/56ec2be07b109a3f3a00994c/feed)
+[![Code Climate](https://codeclimate.com/github/entantoencuanto/tiny_social_network/badges/gpa.svg)](https://codeclimate.com/github/entantoencuanto/tiny_social_network)
 
 A tiny social network with users, messages and followers!
 
